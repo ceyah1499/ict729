@@ -24,6 +24,21 @@ export async function createUserDocument(collection) {
     await collection.insertOne(userDocument);
 }
 
+export async function findUsersByName(collection, name) {
+    return collection.find({ name }).toArray();
+}
+
+export async function updateUsersByName(collection, name, updatedFields) {
+    await collection.updateMany(
+        { name },
+        { $set: updatedFields }
+    );
+}
+
+export async function deleteUsersByName(collection, name) {
+    await collection.deleteMany({ name });
+}
+
 export async function executeUsersCrudOperations() {
     const uri = process.env.DB_URI;
     let mongoClient;
@@ -33,8 +48,8 @@ export async function executeUsersCrudOperations() {
         const db = mongoClient.db('AceTutoringDB');
         const collection = db.collection('users');
 
-        console.log('create');
-        await createUserDocument(collection);
+        await updateUsersByName(collection, 'John Doe', { email: 'johndoe@notexample.com' });
+        console.log(await findUsersByName(collection, 'John Doe'));
     } finally {
         await mongoClient.close();
     }
