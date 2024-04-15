@@ -70,7 +70,7 @@
           }
         } 
       },
-      "/api/user/{id}": {
+      "/api/users/{id}": {
         "parameters": [
           {
             "name": "id",
