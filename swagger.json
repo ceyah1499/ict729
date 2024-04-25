@@ -1,200 +1,807 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "ATLP API",
-      "description": "APIs for ATLP Mobile Application",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "ATLP API",
+    "description": "APIs for ATLP Mobile Application"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/api/users/": {
+      "get": {
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "A list of users"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new user",
+        "responses": {
+          "200": {
+            "description": "The created user"
+          }
+        }
       }
     },
-    "host": "localhost:3000",
-    "basePath": "/",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "CRUD operations on the 'users' collection"
-      }
-    ],
-    "schemes": [
-      "http"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-      "/api/users": {
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get all users in system",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/definitions/Users"
-              }
-            }
-          }
-        },
-        "post": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Create new user",
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "description": "User details",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "New user is created",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        } 
-      },
-      "/api/users/{id}": {
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "ID of user that we want to find",
-            "type": "integer"
+            "type": "string"
           }
         ],
-        "delete": {
-          "summary": "Delete user with given ID",
-          "tags": [
-            "Users"
-          ],
-          "responses": {
-            "200": {
-              "description": "User is deleted",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
+        "responses": {
+          "200": {
+            "description": "The requested user"
           }
-        },
-        "put": {
-          "summary": "Update user with give ID",
-          "tags": [
-            "Users"
-          ],
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "description": "User with new values of properties",
-              "schema": {
-                "$ref": "#/definitions/updateUser"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User is updated",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
+        }
+      },
+      "put": {
+        "summary": "Update a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated user"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmation of successful deletion"
           }
         }
       }
     },
-    "definitions": {
-      "User": {
-        "required": [
-          "name",
-          "email",
-          "role"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "books": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "number"
-                  }
-                }
-            }
-          },
-          "role": {
-            "type": "number"
+    "/api/schedules/": {
+      "get": {
+        "summary": "Get all schedules",
+        "responses": {
+          "200": {
+            "description": "A list of schedules"
           }
         }
       },
-      "updateUser": {
-        "required": [
-          "name",
-          "companies"
-        ],
-        "properties": {
-          "isPublic": {
-            "type": "boolean"
-          },
-          "name": {
-            "type": "string"
-          },
-          "books": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "number"
-                  }
-                }
-            }
-                
-          },
-          "companies": {
-            "type": "array",
-            "items": {
-                "type": "string"      
-            }
-                
+      "post": {
+        "summary": "Create a new schedule",
+        "responses": {
+          "200": {
+            "description": "The created schedule"
           }
-         
+        }
+      }
+    },
+    "/api/schedules/{id}": {
+      "get": {
+        "summary": "Get a schedule by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested schedule"
+          }
         }
       },
-      "Users": {
-        "type": "array",
-        "$ref": "#/definitions/User"
+      "put": {
+        "summary": "Update a schedule by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated schedule"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a schedule by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmation of successful deletion"
+          }
+        }
+      }
+    },
+    "/api/roles/": {
+      "get": {
+        "summary": "Get all roles",
+        "responses": {
+          "200": {
+            "description": "A list of roles"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new role",
+        "responses": {
+          "200": {
+            "description": "The created role"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/roles/{id}": {
+      "get": {
+        "summary": "Get a role by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested role"
+          },
+          "404": {
+            "description": "Role not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a role by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated role"
+          },
+          "404": {
+            "description": "Role not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a role by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role deleted successfully"
+          },
+          "404": {
+            "description": "Role not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/reviews/": {
+      "get": {
+        "summary": "Get all reviews",
+        "responses": {
+          "200": {
+            "description": "A list of reviews"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new review",
+        "responses": {
+          "200": {
+            "description": "The created review"
+          }
+        }
+      }
+    },
+    "/api/reviews/{id}": {
+      "get": {
+        "summary": "Get a review by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The review with the provided ID"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a review by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated review"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a review by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmation of successful deletion"
+          }
+        }
+      }
+    },
+    "/api/permissions/": {
+      "get": {
+        "summary": "Get all permissions",
+        "responses": {
+          "200": {
+            "description": "A list of permissions"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new permission",
+        "responses": {
+          "200": {
+            "description": "The created permission"
+          }
+        }
+      }
+    },
+    "/api/permissions/{id}": {
+      "get": {
+        "summary": "Get a permission by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The permission with the provided ID"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a permission by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated permission"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a permission by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmation of successful deletion"
+          }
+        }
+      }
+    },
+    "/api/materials/": {
+      "get": {
+        "summary": "Get all materials",
+        "responses": {
+          "200": {
+            "description": "A list of materials"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new material",
+        "responses": {
+          "200": {
+            "description": "The created material"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/materials/{id}": {
+      "get": {
+        "summary": "Get a material by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested material"
+          },
+          "404": {
+            "description": "Material not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a material by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated material"
+          },
+          "404": {
+            "description": "Material not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a material by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Material deleted successfully"
+          },
+          "404": {
+            "description": "Material not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/enrollments/": {
+      "get": {
+        "summary": "Get all enrollments",
+        "responses": {
+          "200": {
+            "description": "A list of enrollments"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new enrollment",
+        "responses": {
+          "200": {
+            "description": "The created enrollment"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/enrollments/{id}": {
+      "get": {
+        "summary": "Get an enrollment by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested enrollment"
+          },
+          "404": {
+            "description": "Enrollment not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an enrollment by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated enrollment"
+          },
+          "404": {
+            "description": "Enrollment not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an enrollment by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enrollment deleted successfully"
+          },
+          "404": {
+            "description": "Enrollment not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/courses/": {
+      "get": {
+        "summary": "Get all courses",
+        "responses": {
+          "200": {
+            "description": "A list of courses"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new course",
+        "responses": {
+          "200": {
+            "description": "The created course"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/courses/{id}": {
+      "get": {
+        "summary": "Get a course by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested course"
+          },
+          "404": {
+            "description": "Course not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a course by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated course"
+          },
+          "404": {
+            "description": "Course not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a course by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course deleted successfully"
+          },
+          "404": {
+            "description": "Course not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
       }
     }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The user's name"
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email"
+        },
+        "phone": {
+          "type": "number",
+          "description": "The user's phone number"
+        },
+        "role": {
+          "type": "number",
+          "description": "The user's role"
+        }
+      },
+      "required": ["name", "email", "phone", "role"]
+    },
+    "Schedule": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The start time of the event"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The end time of the event"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the event"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the event"
+        }
+      },
+      "required": ["startTime", "endTime", "status", "description"]
+    },
+    "Role": {
+      "type": "object",
+      "properties": {
+        "roleName": {
+          "type": "string",
+          "description": "The name of the role"
+        }
+      },
+      "required": ["roleName"]
+    },
+    "Review": {
+      "type": "object",
+      "properties": {
+        "rating": {
+          "type": "number",
+          "description": "Rating of the review"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Text of the review"
+        },
+        "reviewDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date of the review"
+        },
+        "courseID": {
+          "type": "number",
+          "description": "ID of the course"
+        },
+        "studentID": {
+          "type": "number",
+          "description": "ID of the student"
+        }
+      },
+      "required": ["rating", "comment", "courseID", "studentID"]
+    }
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "permissionName": {
+          "type": "string",
+          "description": "Name of the permission"
+        },
+        "permissionDetails": {
+          "type": "string",
+          "description": "Details of the permission"
+        },
+        "roleID": {
+          "type": "number",
+          "description": "ID of the role"
+        }
+      },
+      "required": ["permissionName", "permissionDetails", "roleID"]
+    },
+    "Material": {
+      "type": "object",
+      "properties": {
+        "materialURL": {
+          "type": "string",
+          "description": "The URL of the material"
+        },
+        "courseID": {
+          "type": "number",
+          "description": "The ID of the course"
+        }
+      },
+      "required": ["materialURL", "courseID"]
+    },
+    "Enrollment": {
+      "type": "object",
+      "properties": {
+        "enrollmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date of the enrollment"
+        },
+        "studentID": {
+          "type": "number",
+          "description": "The ID of the student"
+        },
+        "courseID": {
+          "type": "number",
+          "description": "The ID of the course"
+        }
+      },
+      "required": ["enrollmentDate", "studentID", "courseID"]
+    },
+    "Course": {
+      "type": "object",
+      "properties": {
+        "courseName": {
+          "type": "string",
+          "description": "The name of the course"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the course"
+        },
+        "tutorID": {
+          "type": "number",
+          "description": "The ID of the tutor"
+        }
+      },
+      "required": ["courseName", "description", "tutorID"]
+    }
   }
-
-  
+}
