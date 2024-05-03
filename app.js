@@ -26,13 +26,13 @@ app.use(express.urlencoded({extended: false}));
 //routes
 app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerJson));
 app.use('/api/users/', userRoute);
-app.use('/api/users/', courseRoute);
-app.use('/api/users/', enrollmentRoute);
-app.use('/api/users/', materialRoute);
-app.use('/api/users/', permissionRoute);
-app.use('/api/users/', reviewRoute);
-app.use('/api/users/', roleRoute);
-app.use('/api/users/', scheduleRoute);
+app.use('/api/courses/', courseRoute);
+app.use('/api/enrollments/', enrollmentRoute);
+app.use('/api/materials/', materialRoute);
+app.use('/api/permissions/', permissionRoute);
+app.use('/api/reviews/', reviewRoute);
+app.use('/api/roles/', roleRoute);
+app.use('/api/schedules/', scheduleRoute);
 
 //hello
 app.get('/', (req,res) => {
