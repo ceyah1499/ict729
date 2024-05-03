@@ -4,6 +4,13 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
 import userRoute from './routes/user.route.js';
+import courseRoute from './routes/course.route.js';
+import enrollmentRoute from './routes/enrollment.route.js';
+import materialRoute from './routes/material.route.js';
+import permissionRoute from './routes/permission.route.js';
+import reviewRoute from './routes/review.route.js';
+import roleRoute from './routes/role.route.js';
+import scheduleRoute from './routes/schedule.route.js';
 
 //initialisation
 config();
@@ -19,6 +26,13 @@ app.use(express.urlencoded({extended: false}));
 //routes
 app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerJson));
 app.use('/api/users/', userRoute);
+app.use('/api/users/', courseRoute);
+app.use('/api/users/', enrollmentRoute);
+app.use('/api/users/', materialRoute);
+app.use('/api/users/', permissionRoute);
+app.use('/api/users/', reviewRoute);
+app.use('/api/users/', roleRoute);
+app.use('/api/users/', scheduleRoute);
 
 //hello
 app.get('/', (req,res) => {
