@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 
 const ScheduleSchema = mongoose.Schema(
     {
+        eventName: {
+            type: String,
+            required: [true, "Event name is required"]
+        },
         startTime: {
             type: Date,
             required: [true, "Start time is required"]
