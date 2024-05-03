@@ -733,7 +733,7 @@
         }
       },
       "required": ["rating", "comment", "courseID", "studentID"]
-    }
+    },
     "Permission": {
       "type": "object",
       "properties": {
