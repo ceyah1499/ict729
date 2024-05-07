@@ -1,0 +1,11 @@
+GET http://localhost:3000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjEyNjkxZjU5NjRjNTRiOWFhMzc3ZGEiLCJ1c2VybmFtZSI6IkphbmUgU21pdGgiLCJlbWFpbCI6ImphbmVzbWl0aEBleGFtcGxlLmNvbSIsImlhdCI6MTcxNTA2MTA0NiwiZXhwIjoxNzE1MzIwMjQ2fQ.JeGG45zGXKWdfO4o7vKxhmTUC6jmEwjaC1dHOrbTNOs
+
+###
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "janesmith@example.com"
+}

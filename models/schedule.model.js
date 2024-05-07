@@ -2,16 +2,16 @@ import mongoose from 'mongoose';
 
 const ScheduleSchema = mongoose.Schema(
     {
-        eventName: {
+        title: {
             type: String,
             required: [true, "Event name is required"]
         },
         startTime: {
-            type: Date,
+            type: String,
             required: [true, "Start time is required"]
         },
         endTime: {
-            type: Date,
+            type: String,
             required: [true, "End time is required"]
         },
         status: {

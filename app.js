@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
+import authRoute from './routes/auth.route.js';
 import userRoute from './routes/user.route.js';
 import courseRoute from './routes/course.route.js';
 import enrollmentRoute from './routes/enrollment.route.js';
@@ -25,6 +26,7 @@ app.use(express.urlencoded({extended: false}));
 
 //routes
 app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerJson));
+app.use('/api/auth/', authRoute);
 app.use('/api/users/', userRoute);
 app.use('/api/courses/', courseRoute);
 app.use('/api/enrollments/', enrollmentRoute);
