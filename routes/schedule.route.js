@@ -1,9 +1,10 @@
 import express from 'express';
 import * as scheduleController from '../controllers/schedule.controller.js';
+import * as authController from '../controllers/auth.controller.js';
 
 const router = express.Router();
 
-router.get('/', scheduleController.getSchedules);
+router.get('/', authController.verifyToken, scheduleController.getSchedules);
 router.get('/:id', scheduleController.getSchedule);
 router.post('/', scheduleController.createSchedule);
 router.put('/:id', scheduleController.updateSchedule);
