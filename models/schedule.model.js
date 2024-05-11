@@ -23,9 +23,13 @@ const ScheduleSchema = mongoose.Schema(
             type: String,
             required: [true, "Description is required"]
         },
+        duration: {
+            type: Number
+        },
     },
     {
-        timestamps: true
+        timestamps: true, 
+        strict: false
     }
 );
 
