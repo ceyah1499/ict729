@@ -131,3 +131,6 @@ dist
 
 # REST requests
 *.rest
+
+# toml
+*.toml
