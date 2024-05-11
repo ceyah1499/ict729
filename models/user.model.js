@@ -14,15 +14,15 @@ const UserSchema = mongoose.Schema(
             type: String,
             required: [true, "Password is required"]
         },
-        phone: {
-            type: Number,
-            required: [true, "Phone number is required"]
-        },
-        role: {
-            type: Number,
-            required: [true, "User role is required"],
-            default: 3
-        },
+        // phone: {
+        //     type: String,
+        //     required: [true, "Phone number is required"]
+        // },
+        // role: {
+        //     type: Number,
+        //     required: [true, "User role is required"],
+        //     default: 3
+        // },
     },
     {
         timestamps: true
