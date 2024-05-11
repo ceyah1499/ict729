@@ -2,9 +2,38 @@ import Schedule from '../models/schedule.model.js';
 
 export const getSchedules = async (req,res) => {
     try {
-        const query = { userID: req.user._id }; 
+        const query = { userID: req.user._id };
         const schedules = await Schedule.find(query);
-        res.status(200).json(schedules);
+        const mon = schedules.filter(function(schedule) {
+            const d = new Date(schedule.startTime);
+            return d.getDay() === 1;
+        });
+        const tue = schedules.filter(function(schedule) {
+            const d = new Date(schedule.startTime);
+            return d.getDay() === 2;
+        });
+        const wed = schedules.filter(function(schedule) {
+            const d = new Date(schedule.startTime);
+            return d.getDay() === 3;
+        });
+        const thu = schedules.filter(function(schedule) {
+            const d = new Date(schedule.startTime);
+            return d.getDay() === 4;
+        });
+        const fri = schedules.filter(function(schedule) {
+            const d = new Date(schedule.startTime);
+            return d.getDay() === 5;
+        });
+        const sat = schedules.filter(function(schedule) {
+            const d = new Date(schedule.startTime);
+            return d.getDay() === 6;
+        });
+        const sun = schedules.filter(function(schedule) {
+            const d = new Date(schedule.startTime);
+            return d.getDay() === 7;
+        });
+        const mappedSchedules = {mon, tue, wed, thu, fri, sat, sun};
+        res.status(200).json(mappedSchedules);
     } catch (error) {
         res.status(500).json({message: error.message});
     }
