@@ -16,7 +16,6 @@ const ScheduleSchema = mongoose.Schema(
         },
         status: {
             type: String,
-            required: [true, "Status is required"],
             default: "planned"
         },
         description: {

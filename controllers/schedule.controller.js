@@ -76,13 +76,13 @@ export const getSchedules = async (req,res) => {
             sumDuration(sat) + 
             sumDuration(sun);
         
-        mon.unshift({dayDuration: sumDuration(mon), weekPercentage: (sumDuration(mon) / weekDuration * 100).toFixed(2)});
-        tue.unshift({dayDuration: sumDuration(tue), weekPercentage: (sumDuration(tue) / weekDuration * 100).toFixed(2)});
-        wed.unshift({dayDuration: sumDuration(wed), weekPercentage: (sumDuration(wed) / weekDuration * 100).toFixed(2)});
-        thu.unshift({dayDuration: sumDuration(thu), weekPercentage: (sumDuration(thu) / weekDuration * 100).toFixed(2)});
-        fri.unshift({dayDuration: sumDuration(fri), weekPercentage: (sumDuration(fri) / weekDuration * 100).toFixed(2)});
-        sat.unshift({dayDuration: sumDuration(sat), weekPercentage: (sumDuration(sat) / weekDuration * 100).toFixed(2)});
-        sun.unshift({dayDuration: sumDuration(sun), weekPercentage: (sumDuration(sun) / weekDuration * 100).toFixed(2)});
+        mon.unshift({dayDuration: sumDuration(mon), weekPercentage: (sumDuration(mon) / weekDuration).toFixed(2)});
+        tue.unshift({dayDuration: sumDuration(tue), weekPercentage: (sumDuration(tue) / weekDuration).toFixed(2)});
+        wed.unshift({dayDuration: sumDuration(wed), weekPercentage: (sumDuration(wed) / weekDuration).toFixed(2)});
+        thu.unshift({dayDuration: sumDuration(thu), weekPercentage: (sumDuration(thu) / weekDuration).toFixed(2)});
+        fri.unshift({dayDuration: sumDuration(fri), weekPercentage: (sumDuration(fri) / weekDuration).toFixed(2)});
+        sat.unshift({dayDuration: sumDuration(sat), weekPercentage: (sumDuration(sat) / weekDuration).toFixed(2)});
+        sun.unshift({dayDuration: sumDuration(sun), weekPercentage: (sumDuration(sun) / weekDuration).toFixed(2)});
 
         const mappedSchedules = {weekDuration, mon, tue, wed, thu, fri, sat, sun};
         res.status(200).json(mappedSchedules);
