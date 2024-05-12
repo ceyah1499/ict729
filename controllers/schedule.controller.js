@@ -1,7 +1,7 @@
 import Schedule from '../models/schedule.model.js';
 
 function calcDiffInHours (startDate, endDate) {
-    let diff =(endDate.getTime() - startDate.getTime()) / 1000;
+    let diff = (endDate.getTime() - startDate.getTime()) / 1000;
     diff /= (60 * 60);
     diff = Math.abs(Math.round(diff));
     return diff;
@@ -11,7 +11,7 @@ function sumDuration (dayObject) {
     let sum = 0;
     for( let el in dayObject ) {
         if (dayObject.hasOwnProperty( el )) {
-        sum += parseFloat(dayObject[el].duration);
+            sum += parseFloat(dayObject[el].duration);
         }
     }
     return sum;
@@ -21,6 +21,9 @@ export const getSchedules = async (req,res) => {
     try {
         const query = { userID: req.user._id };
         const schedules = await Schedule.find(query).lean();
+
+        
+
         const mon = schedules.filter(function(schedule) {
             const d1 = new Date(schedule.startTime);
             const d2 = new Date(schedule.endTime);
@@ -74,13 +77,13 @@ export const getSchedules = async (req,res) => {
             sumDuration(sat) + 
             sumDuration(sun);
         
-        mon.unshift({dayDuration: sumDuration(mon)});
-        tue.unshift({dayDuration: sumDuration(tue)});
-        wed.unshift({dayDuration: sumDuration(wed)});
-        thu.unshift({dayDuration: sumDuration(thu)});
-        fri.unshift({dayDuration: sumDuration(fri)});
-        sat.unshift({dayDuration: sumDuration(sat)});
-        sun.unshift({dayDuration: sumDuration(sun)});
+        mon.unshift({dayDuration: sumDuration(mon), weekPercentage: sumDuration(mon) / weekDuration * 100});
+        tue.unshift({dayDuration: sumDuration(tue), weekPercentage: sumDuration(tue) / weekDuration * 100});
+        wed.unshift({dayDuration: sumDuration(wed), weekPercentage: sumDuration(wed) / weekDuration * 100});
+        thu.unshift({dayDuration: sumDuration(thu), weekPercentage: sumDuration(thu) / weekDuration * 100});
+        fri.unshift({dayDuration: sumDuration(fri), weekPercentage: sumDuration(fri) / weekDuration * 100});
+        sat.unshift({dayDuration: sumDuration(sat), weekPercentage: sumDuration(sat) / weekDuration * 100});
+        sun.unshift({dayDuration: sumDuration(sun), weekPercentage: sumDuration(sun) / weekDuration * 100});
 
         const mappedSchedules = {weekDuration, mon, tue, wed, thu, fri, sat, sun};
         res.status(200).json(mappedSchedules);
