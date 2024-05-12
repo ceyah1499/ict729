@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', authController.verifyToken, scheduleController.getSchedules);
 router.get('/:id', scheduleController.getSchedule);
-router.post('/', scheduleController.createSchedule);
+router.post('/', authController.verifyToken, scheduleController.createSchedule);
 router.put('/:id', scheduleController.updateSchedule);
 router.delete('/:id', scheduleController.deleteSchedule);
 
