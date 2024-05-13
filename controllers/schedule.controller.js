@@ -7,6 +7,23 @@ function calcDiffInHours (startDate, endDate) {
     return diff;
 }
 
+function partitionToDays (schedule) {
+    const d1 = new Date(schedule.startTime);
+    const d2 = new Date(schedule.endTime);
+    schedule.duration = calcDiffInHours(d1, d2);
+
+    switch (d1.getDay())
+    {
+        case 1: mon.push(schedule); break;
+        case 2: tue.push(schedule); break;
+        case 3: wed.push(schedule); break;
+        case 4: thu.push(schedule); break;
+        case 5: fri.push(schedule); break;
+        case 6: sat.push(schedule); break;
+        case 0: sun.push(schedule); break;
+    }
+}
+
 function sumDuration (dayObject) {
     let sum = 0;
     for( let el in dayObject ) {
@@ -17,74 +34,43 @@ function sumDuration (dayObject) {
     return sum;
 }
 
+function calculateAllDurations () {
+    weekDuration = 
+        sumDuration(mon) + 
+        sumDuration(tue) + 
+        sumDuration(wed) + 
+        sumDuration(thu) + 
+        sumDuration(fri) + 
+        sumDuration(sat) + 
+        sumDuration(sun);
+    
+    mon.unshift({dayDuration: sumDuration(mon), weekPercentage: (sumDuration(mon) / weekDuration).toFixed(2)});
+    tue.unshift({dayDuration: sumDuration(tue), weekPercentage: (sumDuration(tue) / weekDuration).toFixed(2)});
+    wed.unshift({dayDuration: sumDuration(wed), weekPercentage: (sumDuration(wed) / weekDuration).toFixed(2)});
+    thu.unshift({dayDuration: sumDuration(thu), weekPercentage: (sumDuration(thu) / weekDuration).toFixed(2)});
+    fri.unshift({dayDuration: sumDuration(fri), weekPercentage: (sumDuration(fri) / weekDuration).toFixed(2)});
+    sat.unshift({dayDuration: sumDuration(sat), weekPercentage: (sumDuration(sat) / weekDuration).toFixed(2)});
+    sun.unshift({dayDuration: sumDuration(sun), weekPercentage: (sumDuration(sun) / weekDuration).toFixed(2)});
+}
+
+let weekDuration = 0;
+const mon = [], 
+      tue = [], 
+      wed = [], 
+      thu = [], 
+      fri = [], 
+      sat = [], 
+      sun = [];
+
 export const getSchedules = async (req,res) => {
     try {
         const query = { userID: req.user._id };
         const schedules = await Schedule.find(query).lean();
-
         
-
-        const mon = schedules.filter(function(schedule) {
-            const d1 = new Date(schedule.startTime);
-            const d2 = new Date(schedule.endTime);
-            schedule.duration = calcDiffInHours(d1, d2);
-            return d1.getDay() === 1;
-        });
-        const tue = schedules.filter(function(schedule) {
-            const d1 = new Date(schedule.startTime);
-            const d2 = new Date(schedule.endTime);
-            schedule.duration = calcDiffInHours(d1, d2);
-            return d1.getDay() === 2;
-        });
-        const wed = schedules.filter(function(schedule) {
-            const d1 = new Date(schedule.startTime);
-            const d2 = new Date(schedule.endTime);
-            schedule.duration = calcDiffInHours(d1, d2);
-            return d1.getDay() === 3;
-        });
-        const thu = schedules.filter(function(schedule) {
-            const d1 = new Date(schedule.startTime);
-            const d2 = new Date(schedule.endTime);
-            schedule.duration = calcDiffInHours(d1, d2);
-            return d1.getDay() === 4;
-        });
-        const fri = schedules.filter(function(schedule) {
-            const d1 = new Date(schedule.startTime);
-            const d2 = new Date(schedule.endTime);
-            schedule.duration = calcDiffInHours(d1, d2);
-            return d1.getDay() === 5;
-        });
-        const sat = schedules.filter(function(schedule) {
-            const d1 = new Date(schedule.startTime);
-            const d2 = new Date(schedule.endTime);
-            schedule.duration = calcDiffInHours(d1, d2);
-            return d1.getDay() === 6;
-        });
-        const sun = schedules.filter(function(schedule) {
-            const d1 = new Date(schedule.startTime);
-            const d2 = new Date(schedule.endTime);
-            schedule.duration = calcDiffInHours(d1, d2);
-            return d1.getDay() === 0;
-        });
-
-        const weekDuration = 
-            sumDuration(mon) + 
-            sumDuration(tue) + 
-            sumDuration(wed) + 
-            sumDuration(thu) + 
-            sumDuration(fri) + 
-            sumDuration(sat) + 
-            sumDuration(sun);
-        
-        mon.unshift({dayDuration: sumDuration(mon), weekPercentage: (sumDuration(mon) / weekDuration).toFixed(2)});
-        tue.unshift({dayDuration: sumDuration(tue), weekPercentage: (sumDuration(tue) / weekDuration).toFixed(2)});
-        wed.unshift({dayDuration: sumDuration(wed), weekPercentage: (sumDuration(wed) / weekDuration).toFixed(2)});
-        thu.unshift({dayDuration: sumDuration(thu), weekPercentage: (sumDuration(thu) / weekDuration).toFixed(2)});
-        fri.unshift({dayDuration: sumDuration(fri), weekPercentage: (sumDuration(fri) / weekDuration).toFixed(2)});
-        sat.unshift({dayDuration: sumDuration(sat), weekPercentage: (sumDuration(sat) / weekDuration).toFixed(2)});
-        sun.unshift({dayDuration: sumDuration(sun), weekPercentage: (sumDuration(sun) / weekDuration).toFixed(2)});
-
+        schedules.forEach(partitionToDays);
         const mappedSchedules = {weekDuration, mon, tue, wed, thu, fri, sat, sun};
+        calculateAllDurations();
+        
         res.status(200).json(mappedSchedules);
     } catch (error) {
         res.status(500).json({message: error.message});
