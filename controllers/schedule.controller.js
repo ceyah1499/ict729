@@ -27,7 +27,7 @@ function partitionToDays (schedule) {
 function sumDuration (dayObject) {
     let sum = 0;
     for( let el in dayObject ) {
-        if (dayObject.hasOwnProperty( el )) {
+        if (dayObject.hasOwnProperty(el)) {
             sum += parseFloat(dayObject[el].duration);
         }
     }
@@ -43,24 +43,25 @@ function calculateAllDurations () {
         sumDuration(fri) + 
         sumDuration(sat) + 
         sumDuration(sun);
-    
-    mon.unshift({dayDuration: sumDuration(mon), weekPercentage: (sumDuration(mon) / weekDuration).toFixed(2)});
-    tue.unshift({dayDuration: sumDuration(tue), weekPercentage: (sumDuration(tue) / weekDuration).toFixed(2)});
-    wed.unshift({dayDuration: sumDuration(wed), weekPercentage: (sumDuration(wed) / weekDuration).toFixed(2)});
-    thu.unshift({dayDuration: sumDuration(thu), weekPercentage: (sumDuration(thu) / weekDuration).toFixed(2)});
-    fri.unshift({dayDuration: sumDuration(fri), weekPercentage: (sumDuration(fri) / weekDuration).toFixed(2)});
-    sat.unshift({dayDuration: sumDuration(sat), weekPercentage: (sumDuration(sat) / weekDuration).toFixed(2)});
-    sun.unshift({dayDuration: sumDuration(sun), weekPercentage: (sumDuration(sun) / weekDuration).toFixed(2)});
+        
+    if(weekDuration !== 0) {
+        mon.unshift({dayDuration: sumDuration(mon), weekPercentage: (sumDuration(mon) / weekDuration).toFixed(2)});
+        tue.unshift({dayDuration: sumDuration(tue), weekPercentage: (sumDuration(tue) / weekDuration).toFixed(2)});
+        wed.unshift({dayDuration: sumDuration(wed), weekPercentage: (sumDuration(wed) / weekDuration).toFixed(2)});
+        thu.unshift({dayDuration: sumDuration(thu), weekPercentage: (sumDuration(thu) / weekDuration).toFixed(2)});
+        fri.unshift({dayDuration: sumDuration(fri), weekPercentage: (sumDuration(fri) / weekDuration).toFixed(2)});
+        sat.unshift({dayDuration: sumDuration(sat), weekPercentage: (sumDuration(sat) / weekDuration).toFixed(2)});
+        sun.unshift({dayDuration: sumDuration(sun), weekPercentage: (sumDuration(sun) / weekDuration).toFixed(2)});
+    }
+}
+
+function resetGlobalVariables () {
+    weekDuration = 0;
+    mon = [], tue = [], wed = [], thu = [], fri = [], sat = [], sun = [];
 }
 
 let weekDuration = 0;
-const mon = [], 
-      tue = [], 
-      wed = [], 
-      thu = [], 
-      fri = [], 
-      sat = [], 
-      sun = [];
+let mon = [], tue = [], wed = [], thu = [], fri = [], sat = [], sun = [];
 
 export const getSchedules = async (req,res) => {
     try {
@@ -68,9 +69,9 @@ export const getSchedules = async (req,res) => {
         const schedules = await Schedule.find(query).lean();
         
         schedules.forEach(partitionToDays);
-        const mappedSchedules = {weekDuration, mon, tue, wed, thu, fri, sat, sun};
         calculateAllDurations();
-        
+        const mappedSchedules = {weekDuration, mon, tue, wed, thu, fri, sat, sun};
+        resetGlobalVariables();
         res.status(200).json(mappedSchedules);
     } catch (error) {
         res.status(500).json({message: error.message});
